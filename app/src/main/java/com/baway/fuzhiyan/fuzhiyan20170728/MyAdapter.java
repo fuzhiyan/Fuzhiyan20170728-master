@@ -23,6 +23,7 @@ import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
+    public OnItemClickListener listener ;
     private Context context;
     private List<UserBean.DataBean> list = new ArrayList<>();
 
@@ -36,17 +37,24 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
         view = LayoutInflater.from(context).inflate(R.layout.list_item, parent, false);
+
         return new MyAdapter.MyViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(MyAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(MyAdapter.MyViewHolder holder, final int position) {
 
         holder.userName.setText(list.get(position).userName);
 //        holder.userAge.setText(list.get(position).userAge);
         holder.occupation.setText(list.get(position).occupation);
         holder.introduction.setText(list.get(position).introduction);
         Glide.with(context).load(list.get(position).userImg).into(holder.userImage);
+        holder.userImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onItemClickListener(position,v);
+            }
+        });
 
     }
 
@@ -75,4 +83,19 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         }
 
     }
+    interface OnItemClickListener {
+
+        void onItemClickListener(int position,View view);
+
+    }
+
+
+
+
+
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        this.listener = listener;
+    }
+
 }
