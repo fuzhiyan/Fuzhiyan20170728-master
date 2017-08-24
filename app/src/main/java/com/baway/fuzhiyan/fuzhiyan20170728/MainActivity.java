@@ -5,7 +5,9 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.AbsListView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,7 +26,7 @@ import okhttp3.Response;
 * 类用途：加载主页面的布局。。显示数据
 *
 * */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MyAdapter.OnItemClickListener {
     private RecyclerView recyclerView;
     private MyAdapter myAdapter;
     private UserBean bean;
@@ -43,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-
         recyclerView.setLayoutManager(linearLayoutManager);
         initData();
         recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -65,10 +66,10 @@ public class MainActivity extends AppCompatActivity {
                     myAdapter.notifyDataSetChanged();
                 }
 
-                }
-            });
+            }
+        });
 
-        }
+    }
 
     private void initData() {
 
@@ -97,7 +98,11 @@ public class MainActivity extends AppCompatActivity {
                     public void run() {
                         System.out.println(list + "");
                         myAdapter = new MyAdapter(MainActivity.this, list);
+                        myAdapter.setOnItemClickListener(MainActivity.this);
+
+
                         recyclerView.setAdapter(myAdapter);
+
                     }
                 });
             }
@@ -108,6 +113,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onItemClickListener(int position, View view) {
+
+        Toast.makeText(MainActivity.this, position + "", Toast.LENGTH_LONG).show();
+    }
 }
 
 
