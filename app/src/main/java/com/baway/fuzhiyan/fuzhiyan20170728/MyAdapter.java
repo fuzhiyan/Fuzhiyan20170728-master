@@ -23,7 +23,7 @@ import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
-    public OnItemClickListener listener ;
+    public OnItemClickListener listener;
     private Context context;
     private List<UserBean.DataBean> list = new ArrayList<>();
 
@@ -52,7 +52,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         holder.userImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onItemClickListener(position,v);
+                listener.onItemClickListener(position, v);
             }
         });
 
@@ -60,9 +60,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return list == null ? 0 : list.size();
     }
-    public void add(){
+
+    public void add() {
 
     }
 
@@ -83,18 +84,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         }
 
     }
+
+    //自定义条目点击接口
     interface OnItemClickListener {
 
-        void onItemClickListener(int position,View view);
+        void onItemClickListener(int position, View view);
 
     }
 
-
-
-
-
-
-    public void setOnItemClickListener(OnItemClickListener listener){
+    public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
     }
 
